@@ -93,6 +93,8 @@
   function galleryArticle(gallery, index) {
     var number = String(index + 1).padStart(2, "0");
     var article = element("article", "gallery");
+    article.id = "gallery-" + gallery.id;
+    article.tabIndex = -1;
     article.setAttribute("aria-labelledby", gallery.id + "-title");
     article.appendChild(galleryImage(gallery, number));
 
@@ -160,4 +162,27 @@
     section.appendChild(content);
     container.appendChild(section);
   });
+
+  // 原有分類可收合；站內深連結與地圖連結都先展開，再定位到卡片。
+  function revealLinkedGallery() {
+    var id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (error) { return; }
+    var target = document.getElementById(id);
+    if (!target) return;
+    var article = target.closest(".gallery");
+    if (!article) return;
+    var content = article.closest(".section-content");
+    var toggle = content.parentElement.querySelector(".section-toggle");
+    content.hidden = false;
+    toggle.setAttribute("aria-expanded", "true");
+    target.scrollIntoView({ block: "start" });
+    article.focus({ preventScroll: true });
+  }
+  window.addEventListener("hashchange", revealLinkedGallery);
+  // 再次點擊同一個 hash 也能展開已收合的分類，並保留原生錨點導覽。
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest("a[href^='#gallery-']");
+    if (link && link.hash === window.location.hash) revealLinkedGallery();
+  });
+  revealLinkedGallery();
 }());

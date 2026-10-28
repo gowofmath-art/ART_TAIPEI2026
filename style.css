@@ -81,6 +81,62 @@ h1 span { font-family: var(--serif); font-style: italic; font-weight: 400; lette
 .skip-link:focus { transform: none; }
 .noscript-note { padding: 30px 0; }
 
+/* 展場地圖：獨立區塊，保留原有畫廊卡片與分類版型。 */
+.guide-nav { display: flex; flex-wrap: wrap; gap: 14px 32px; padding-bottom: 25px; font-size: 12px; }
+.guide-nav a { text-decoration: none; }
+.guide-nav a:hover { text-decoration: underline; }
+.guide-nav span { margin-left: 7px; color: var(--muted); font-family: var(--serif); font-style: italic; }
+.floor-map { border-top: 1px solid var(--ink); padding-block: 28px 60px; scroll-margin-top: 24px; }
+.map-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 22px; margin-bottom: 24px; }
+.map-legend { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 0; margin: 0; list-style: none; font-size: 11px; color: var(--body); }
+.map-legend li { display: flex; align-items: center; gap: 9px; }
+.map-must-visit { --map-color: #A64B45; }
+.map-interested { --map-color: #34678A; }
+.map-dot { display: inline-block; flex-shrink: 0; width: 10px; height: 10px; background: var(--map-color); border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px var(--map-color); }
+.map-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12px; }
+.map-toolbar button { min-width: 44px; min-height: 44px; padding: 7px 14px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+.map-toolbar button:hover:enabled { border-color: var(--ink); }
+.map-toolbar button:disabled { opacity: .35; cursor: default; }
+#map-zoom-level { min-width: 48px; text-align: center; font-variant-numeric: tabular-nums; color: var(--body); }
+.map-original { margin-left: auto; padding: 9px 0 9px 12px; font-size: 11px; }
+.map-help { margin-block: 14px; font-size: 11px; color: var(--muted); }
+.map-viewport { position: relative; height: clamp(420px, 78vh, 800px); overflow: hidden; border: 1px solid var(--line); background: #fafaf8; touch-action: none; user-select: none; -webkit-user-select: none; }
+.map-viewport:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.map-viewport.is-zoomed { cursor: grab; }
+.map-viewport.is-dragging, .map-viewport.is-dragging a { cursor: grabbing; }
+.map-scene { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+#map-image { display: block; width: 100%; height: 100%; max-width: none; pointer-events: none; }
+.map-markers { position: absolute; inset: 0; }
+.map-marker { position: absolute; display: grid; place-items: center; width: 28px; height: 28px; transform: translate(-50%, -50%) scale(var(--marker-scale, 1)); transform-origin: center; cursor: pointer; text-decoration: none; border-radius: 50%; }
+.map-marker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--map-color); border: 2px solid #fff; box-shadow: 0 1px 4px #0004; }
+.map-marker:hover, .map-marker:focus-visible { z-index: 2; }
+.map-marker:focus-visible { outline: 2px solid var(--map-color); outline-offset: 1px; }
+.map-tooltip { position: absolute; bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 240px; padding: 5px 9px; background: #fff; color: var(--ink); border: 1px solid var(--line); box-shadow: 0 2px 6px #0001; font-size: 11px; line-height: 1.7; pointer-events: none; opacity: 0; visibility: hidden; }
+@media (hover: hover) { .map-marker:hover .map-tooltip { opacity: 1; visibility: visible; } }
+.map-marker:focus-visible .map-tooltip { opacity: 1; visibility: visible; }
+.map-status { position: absolute; inset: 0; display: grid; align-content: center; padding: 25px; text-align: center; font-size: 12px; color: var(--muted); }
+.map-coverage { margin-top: 15px; color: var(--muted); font-size: 11px; }
+.map-gallery-links { display: flex; flex-wrap: wrap; gap: 4px 23px; list-style: none; padding: 0; margin: 9px 0 0; }
+.map-gallery-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; font-size: 11px; text-decoration: none; }
+.map-gallery-links a:hover { text-decoration: underline; }
+.gallery[id] { scroll-margin-top: 24px; }
+.gallery:focus { outline: none; }
+.gallery:focus-visible { outline: 1px solid var(--line); outline-offset: 8px; }
+@media (max-width: 700px) {
+  .map-heading { gap: 18px; }
+  .floor-map { padding-bottom: 38px; }
+  .map-viewport { height: clamp(400px, 68vh, 600px); }
+  .map-toolbar { gap: 6px; }
+  .map-toolbar button { padding-inline: 11px; }
+  .map-original { padding-left: 0; }
+  .map-help { line-height: 1.8; }
+  .map-gallery-links { gap: 2px 18px; }
+  /* 全圖時 D09 / D07 相鄰；縮小命中區，避免一個圓點蓋住另一個中心。 */
+  .map-marker { width: min(28px, calc(12px * var(--map-zoom, 1))); height: min(28px, calc(12px * var(--map-zoom, 1))); }
+  .map-marker::before { width: 8px; height: 8px; }
+  .is-zoomed .map-marker::before { width: 10px; height: 10px; }
+}
+
 @media (min-width: 1600px) { h1 { font-size: 122px; } }
 @media (max-width: 1000px) {
   .page-width { width: calc(100% - 72px); }

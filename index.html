@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="style.css">
   <script src="data.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="floor-map-data.js" defer></script>
+  <script src="floor-map.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#galleries">跳至畫廊精選</a>
@@ -35,8 +37,41 @@
       </div>
     </section>
 
+    <nav class="guide-nav" aria-label="觀展導覽">
+      <a href="#galleries">畫廊精選</a>
+      <a href="#floor-map">展場地圖 <span lang="en">Floor Map</span></a>
+    </nav>
+
     <div id="galleries"></div>
     <noscript><p class="noscript-note">請開啟瀏覽器的 JavaScript，以顯示十一間畫廊與藝術家名單。</p></noscript>
+
+    <section id="floor-map" class="floor-map" aria-labelledby="floor-map-title">
+      <div class="map-heading">
+        <h2 id="floor-map-title" class="section-title"><span class="section-english" lang="en">Floor Map</span><span class="section-chinese">展場地圖</span></h2>
+        <ul class="map-legend" aria-label="關注分類圖例">
+          <li><span class="map-dot map-must-visit" aria-hidden="true"></span>必去畫廊（必逛）</li>
+          <li><span class="map-dot map-interested" aria-hidden="true"></span>有興趣畫廊</li>
+        </ul>
+      </div>
+      <div class="map-toolbar" role="group" aria-label="地圖操作">
+        <button id="map-zoom-out" type="button" aria-label="縮小地圖" disabled>−</button>
+        <output id="map-zoom-level" aria-label="地圖縮放比例">100%</output>
+        <button id="map-zoom-in" type="button" aria-label="放大地圖" disabled>＋</button>
+        <button id="map-reset" type="button" disabled>恢復全圖</button>
+        <a class="map-original" href="ART-TAIPEI-2026-Map.pdf" target="_blank" rel="noopener">官方 PDF ↗</a>
+      </div>
+      <p id="map-help" class="map-help">點擊圓點前往畫廊介紹。使用按鈕或滾輪縮放、拖曳移動；手機可雙指縮放。鍵盤可用方向鍵移動、＋／− 縮放、Home 恢復全圖。</p>
+      <div id="map-viewport" class="map-viewport" tabindex="0" role="region" aria-label="可縮放的 ART TAIPEI 2026 官方展場地圖" aria-describedby="map-help" aria-busy="true">
+        <div id="map-scene" class="map-scene" hidden>
+          <img id="map-image" src="images/art-taipei-2026-map.webp" width="5196" height="6000" alt="ART TAIPEI 2026 官方展場平面圖，完整標示各畫廊展位、出入口與公共設施。" draggable="false">
+          <div id="map-markers" class="map-markers" aria-label="關注畫廊標記"></div>
+        </div>
+        <p id="map-status" class="map-status" role="status">正在載入官方展場地圖…</p>
+      </div>
+      <p id="map-coverage" class="map-coverage" role="status"></p>
+      <ul id="map-gallery-links" class="map-gallery-links" aria-label="地圖標記畫廊索引"></ul>
+      <noscript><p class="noscript-note">請開啟 JavaScript 使用互動標記，或查看上方官方 PDF。</p></noscript>
+    </section>
   </main>
 
   <footer class="footer page-width">
