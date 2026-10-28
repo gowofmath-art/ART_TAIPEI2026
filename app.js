@@ -28,7 +28,7 @@
     var stage = element("div", "image-stage");
     var placeholder = element("div", "image-placeholder");
     placeholder.setAttribute("role", "img");
-    placeholder.setAttribute("aria-label", gallery.name + "：作品圖片待提供");
+    placeholder.setAttribute("aria-label", gallery.name + "：作品圖片待提供" + (gallery.artworks ? "，" + gallery.artworks.join("、") : ""));
     var frame = element("div", "placeholder-frame");
     frame.setAttribute("aria-hidden", "true");
     frame.appendChild(element("span", "placeholder-number", number));
@@ -37,8 +37,7 @@
     stage.appendChild(placeholder);
     var caption = element("figcaption", "image-caption");
     var captionName = element("span", "", gallery.internationalName || gallery.name);
-    var captionDetail = element("span", "", "作品圖像待提供");
-    caption.append(captionName, captionDetail);
+    caption.appendChild(captionName);
 
     if (gallery.image) {
       var img = element("img", "artwork");
@@ -47,12 +46,10 @@
       img.addEventListener("load", function () {
         placeholder.hidden = true;
         img.hidden = false;
-        captionDetail.textContent = gallery.imageCaption || "";
       });
       img.addEventListener("error", function () {
         img.hidden = true;
         placeholder.hidden = false;
-        captionDetail.textContent = "作品圖像待提供";
       });
       stage.appendChild(img);
       img.src = gallery.image;
@@ -63,8 +60,7 @@
 
   function artistList(gallery) {
     var block = element("div", "artist-block");
-    block.appendChild(element("h4", "detail-label", gallery.artistLabel || "藝術家"));
-    if (gallery.artistNote) block.appendChild(element("p", "artist-note", gallery.artistNote));
+    block.appendChild(element("h4", "detail-label", "藝術家"));
     var list = element("ul", "artist-list");
     list.id = gallery.id + "-artists";
     gallery.artists.forEach(function (name, index) {
@@ -113,7 +109,7 @@
     if (gallery.internationalName) body.appendChild(element("p", "international-name", gallery.internationalName));
     if (gallery.location) body.appendChild(element("p", "gallery-location", gallery.location));
     body.appendChild(element("p", "gallery-description", gallery.description));
-    if (gallery.artists && gallery.artists.length) body.appendChild(artistList(gallery));
+    if (gallery.artists) body.appendChild(artistList(gallery));
     var reason = element("div", "reason");
     reason.append(element("h4", "detail-label", "為何關注"), element("p", "", gallery.reason));
     body.appendChild(reason);

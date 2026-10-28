@@ -48,12 +48,12 @@ h1 span { font-family: var(--serif); font-style: italic; font-weight: 400; lette
 .gallery { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(40px, 5.4vw, 76px); align-items: start; padding-bottom: 62px; margin-bottom: 58px; border-bottom: 1px solid var(--line); }
 .gallery-section .gallery:last-child { border-bottom: 0; margin-bottom: 10px; padding-bottom: 72px; }
 .gallery-figure { min-width: 0; }
-.image-stage { background: var(--paper); }
+.image-stage { position: relative; aspect-ratio: 5 / 4; background: var(--paper); }
 .image-placeholder { aspect-ratio: 5 / 4; display: grid; place-items: center; padding: 12%; }
 .placeholder-frame { width: 58%; height: 100%; border: 1px solid #d9d8d1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; text-align: center; }
 .placeholder-number { font-family: var(--serif); color: #aaa99f; font-size: clamp(36px, 4vw, 56px); font-style: italic; line-height: 1; }
 .placeholder-label { color: #85857b; font-size: 8px; letter-spacing: .14em; padding-inline: 8px; }
-.artwork { display: block; width: auto; max-width: 100%; height: auto; margin-inline: auto; object-fit: contain; }
+.artwork { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
 .image-caption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; padding-top: 11px; font-size: 10px; line-height: 1.6; color: var(--muted); letter-spacing: .025em; }
 .gallery-meta { display: flex; justify-content: space-between; align-items: center; margin-top: -8px; margin-bottom: 17px; }
 .gallery-index { font-family: var(--serif); font-size: 17px; font-style: italic; color: var(--muted); }
@@ -66,7 +66,6 @@ h1 span { font-family: var(--serif); font-style: italic; font-weight: 400; lette
 .gallery-description { color: var(--body); font-size: 13px; margin-top: 22px; line-height: 1.9; }
 .artist-block { margin-top: 23px; }
 .detail-label { color: var(--muted); font-size: 10px; font-weight: 400; letter-spacing: .14em; line-height: 1.6; margin-bottom: 8px; }
-.artist-note { font-size: 11px; color: var(--muted); margin-bottom: 9px; }
 .artist-list { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; color: var(--body); font-size: 12px; line-height: 1.8; }
 .artist-list li { max-width: 100%; overflow-wrap: anywhere; }
 .artist-toggle { min-height: 44px; display: block; background: none; border: 0; border-bottom: 1px solid var(--line); padding: 9px 0 5px; cursor: pointer; font-size: 11px; letter-spacing: .02em; }
